@@ -1,13 +1,31 @@
 from urllib.request import urlopen
-import json
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from _sqlite3 import Row
 
-response = urlopen('https://www.quandl.com/api/v3/datasets/148APPS/APPS_SUB.csv')
+def data2pandas(data):
+    response = urlopen(data)
+    df = pd.read_csv(response)
+    return df
+def printColumn(data):
+    print(data.columns.values.tolist())
+    return
+def printRow(data):
+    for row in data.iterrows():
+        index, data = row
+        print(data.tolist())
+    return
 
-df = pd.read_csv(response)
-print(df.columns.values.tolist())
+submission = 'https://www.quandl.com/api/v3/datasets/148APPS/APPS_SUB.csv'
+active = 'https://www.quandl.com/api/v3/datasets/148APPS/APPS_COUNT.csv'
+approval = 'https://www.quandl.com/api/v3/datasets/148APPS/APPS_APPROV.csv'
+
+a = data2pandas(submission)
+b = data2pandas(active)
+c = data2pandas(approval)
+
+printColumn(b)
 
 if __name__ == '__main__':
     pass
